@@ -1,12 +1,17 @@
 #!/usr/bin/env bash
-# #*- sintaksisi variable da - a qeder olan herseyi silir 
-for ITEM in *; do
+# #*- sintaksisi variable da - a qeder olan herseyi silir
+for file in *; do
+    [ -e "$file" ] || continue
 
-    if [ -d "$ITEM" ]; then
-        continue
-    fi
-
-    if [[ "$ITEM" == *-* ]]; then
-        echo "${ITEM#*-}"
-    fi
+    case "$file" in
+        -*)
+            echo "${file#*-}"
+            ;;
+        *-*)
+            echo "${file#*-}"
+            ;;
+        *)
+            echo "$file"
+            ;;
+    esac
 done
