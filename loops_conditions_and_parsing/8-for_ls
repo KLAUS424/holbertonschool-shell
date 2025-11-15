@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 # #*- sintaksisi variable da - a qeder olan herseyi silir 
-for ITEM in $(ls -1); do
-   
-    echo "${ITEM#*-}"
+for ITEM in *; do
+
+    if [ -d "$ITEM" ]; then
+        continue
+    fi
+
+    if [[ "$ITEM" == *-* ]]; then
+        echo "${ITEM#*-}"
+    fi
 done
