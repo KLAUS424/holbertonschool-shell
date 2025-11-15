@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# #*- sintaksisi variable da - a qeder olan herseyi silir 
+for ITEM in $(ls -1); do
+   
+    echo "${ITEM#*-}"
+done
