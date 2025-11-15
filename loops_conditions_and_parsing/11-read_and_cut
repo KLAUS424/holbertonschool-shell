@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 #bu script /etc/passwd faylinin ancaq mueyyen hisselerini oxuyur
 
-while IFS=':' read -r user pass uid gid desc home shell
-do
+while IFS=':' read -r user _ uid _ _ home _; do
     echo "$user:$uid:$home"
 done < /etc/passwd
