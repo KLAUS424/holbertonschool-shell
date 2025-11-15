@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+#until ile loop simple task
+count=1 
+until [ $count -gt 10 ]; do
+  echo "Best School"
+  ((count++))
+done
