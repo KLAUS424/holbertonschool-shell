@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# This script displays the PID and process name for processes containing the word 'bash'.
+# ps komandasinin istifadesi qadagan edildiyi ucun pgrep istifade olunur.
+pgrep -l bash
