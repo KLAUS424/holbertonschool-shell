@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# This script finds the PID of the running 4-to_infinity_and_beyond process 
+# and sends a termination signal (SIGTERM) to it using kill.
+
+PID_TO_KILL=$(pgrep -f "4-to_infinity_and_beyond")
+if [ -n "$PID_TO_KILL" ]; then
+    kill "$PID_TO_KILL"
+fi
