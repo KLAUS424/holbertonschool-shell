@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# This script manages a PID file, runs indefinitely, and handles SIGTERM, SIGINT, and SIGQUIT signals.
+
+PID_FILE="/var/run/myscript.pid"
+
+cleanup_and_exit() {
+    rm -f "$PID_FILE"
+    exit 0
+}
+sigterm_handler() {
+    echo "I hate the kill command"
+    cleanup_and_exit
+}
+sigint_handler() {
+    echo "Y U no love me?!"
+}
+echo "$$" > "$PID_FILE"
+
+trap 'sigterm_handler' SIGTERM
+trap 'sigint_handler' SIGINT
+trap 'cleanup_and_exit' SIGQUIT
+
+while true; do
+    echo "To infinity and beyond"
+    sleep 2
+done
