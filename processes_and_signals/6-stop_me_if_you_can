@@ -2,4 +2,4 @@
 # This script finds and stops the 4-to_infinity_and_beyond process 
 # by its name without using 'kill' or 'killall'.
 
-pkill -f "4-to_infinity_and_beyond"
+pkill -fx "4-to_infinity_and_beyond"
