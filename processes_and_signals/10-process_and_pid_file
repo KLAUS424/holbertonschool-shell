@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # This script manages a PID file, runs indefinitely, and handles SIGTERM, SIGINT, and SIGQUIT signals.
 
-PID_FILE="/var/run/myscript.pid"
+PID_FILE="/tmp/var/run/myscript.pid"
 
 cleanup_and_exit() {
     rm -f "$PID_FILE"
