@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# This script forcefully stops the 7-highlander process using the SIGKILL signal (9).
+# This is necessary because 7-highlander traps the default SIGTERM signal.
+
+PID_TO_KILL=$(pgrep -f "7-highlander")
+if [ -n "$PID_TO_KILL" ]; then
+    kill -9 "$PID_TO_KILL"
+fi
