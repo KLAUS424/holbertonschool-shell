@@ -3,8 +3,14 @@
 
 PID_FILE="/var/run/myscript.pid"
 
+if [ "$(whoami)" != "root" ]; then
+    echo "XƏTA: Bu skript /var/run qovluğuna yazmaq üçün root (sudo) icazələri tələb edir." 1>&2
+    echo "Zəhmət olmasa: sudo ./10-process_and_pid_file kimi işə salın." 1>&2
+fi
+
 cleanup_and_exit() {
-    sudo rm -f "$PID_FILE"
+    
+    rm -f "$PID_FILE"
     exit 0
 }
 
@@ -17,12 +23,11 @@ sigint_handler() {
     echo "Y U no love me?!"
 }
 
-echo "$$" | sudo tee "$PID_FILE" > /dev/null || exit 1
-
+echo "$$" > "$PID_FILE" || exit 1
+ı
 trap 'sigterm_handler' SIGTERM
 trap 'sigint_handler' SIGINT
 trap 'cleanup_and_exit' SIGQUIT
-
 
 while true; do
     echo "To infinity and beyond"
