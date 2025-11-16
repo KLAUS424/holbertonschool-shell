@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
-# Bu skript "/tmp/my_process" faylına sonsuz olaraq mesaj yazir.
-
-LOG_FILE="/tmp/my_process"
-
-> "$LOG_FILE"
-
-while true; do
-    echo "I am alive!" >> "$LOG_FILE"
-    sleep 2
+#bu script maganage my proces i yaradir
+while true
+do
+  echo "I am alive!" >> /tmp/my_process
+  sleep 2
 done
+

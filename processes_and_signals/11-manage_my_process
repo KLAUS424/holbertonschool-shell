@@ -1,50 +1,46 @@
 #!/usr/bin/env bash
-# Bu skript "manage_my_process" daemonunu idarə edir: start, stop, restart.
-
-PROCESS_NAME="manage_my_process"
-PID_FILE="/var/run/my_process.pid"
-
-stop_process() {
-    if [ -f "$PID_FILE" ]; then
-
-        PID=$(cat "$PID_FILE")
-
-        kill "$PID" 2>/dev/null
-        rm -f "$PID_FILE"
-        echo "$PROCESS_NAME stopped"
-    fi
-}
-
-start_process() {
-    ./"$PROCESS_NAME" &
-
-    NEW_PID=$(pgrep -f "^./$PROCESS_NAME\$")
-    
-    echo "$NEW_PID" > "$PID_FILE"
-    echo "$PROCESS_NAME started"
-}
+#bu skript "manage_my_process" daemonunu idare edir
+PIDFILE="/var/run/my_process.pid"
+SCRIPT="/usr/bin/env bash manage_my_process"
 
 case "$1" in
-    start)
-        start_process
-        ;;
-    
-    stop)
-        stop_process
-        ;;
-        
-    restart)
-        stop_process
-        
-        start_process
-        
-        echo "$PROCESS_NAME restarted"
-        ;;
-        
-    *)
-        echo "Usage: $PROCESS_NAME {start|stop|restart}"
-        exit 1
-        ;;
+  start)
+    # manage_my_process-i background-da işə sal
+    $SCRIPT &
+    # Son fon prosesi PID-i
+    echo $! > "$PIDFILE"
+    echo "manage_my_process started"
+    ;;
+  stop)
+    if [ -f "$PIDFILE" ]; then
+      PID=$(cat "$PIDFILE")
+      if kill "$PID" 2>/dev/null; then
+        rm -f "$PIDFILE"
+        echo "manage_my_process stopped"
+      else
+        # Proses artıq yoxdur, amma yenə də PID faylını silək
+        rm -f "$PIDFILE"
+        echo "manage_my_process stopped"
+      fi
+    else
+      # PID faylı yoxdursa, sadəcə mesaj ver
+      echo "manage_my_process stopped"
+    fi
+    ;;
+  restart)
+    # stop hissəsi
+    if [ -f "$PIDFILE" ]; then
+      PID=$(cat "$PIDFILE")
+      kill "$PID" 2>/dev/null || true
+      rm -f "$PIDFILE"
+    fi
+    # start hissəsi
+    $SCRIPT &
+    echo $! > "$PIDFILE"
+    echo "manage_my_process restarted"
+    ;;
+  *)
+    echo "Usage: manage_my_process {start|stop|restart}"
+    ;;
 esac
 
-exit 0
