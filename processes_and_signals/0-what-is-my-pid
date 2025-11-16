@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
+# this script shows our bash's pid 
 echo $$
