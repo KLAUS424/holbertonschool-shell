@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# This script displays a message indefinitely and intercepts the SIGTERM signal 
+# to print "I am invincible!!!".
+invincible_message() {
+
+    echo "I am invincible!!!"
+    
+}
+trap 'invincible_message' SIGTERM
+while true; do
+    
+    echo "To infinity and beyond"
+    sleep 2
+done
